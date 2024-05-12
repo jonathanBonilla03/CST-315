@@ -1,0 +1,14 @@
+jbonilla2003@LAPTOP-BP0IMB47:~$ nano HelloWorld.c
+jbonilla2003@LAPTOP-BP0IMB47:~$
+#include <stdio.h>
+int main(){
+  printf("Hello, World!\n");
+  return 0;
+}
+
+jbonilla2003@LAPTOP-BP0IMB47:~$ ls
+HelloWorld.c  hello.c
+jbonilla2003@LAPTOP-BP0IMB47:~$ g++ HelloWorld.c -o Hello
+jbonilla2003@LAPTOP-BP0IMB47:~$ ./Hello
+Hello, World!
+jbonilla2003@LAPTOP-BP0IMB47:~$
