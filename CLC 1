@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <pthread.h>
+
+#define BUFFER_SIZE 10
+
+// Function prototypes
+void consume(int item);
+
+// Global variables
+int buffer[BUFFER_SIZE];
+int in = 0, out = 0;
+int theProduct = 0;
+
+
+void *producer(void *arg) {
+    while (1) {
+        int item = produce(); // Produce item
+
+        buffer[in] = item; // Put item into buffer
+        in = (in + 1) % BUFFER_SIZE; // Update buffer
+        printf("Produced: %d\n", item);
+        sleep(1); // Simulate production
+    }
+    return NULL;
+}
+
+void *consumer(void *arg) {
+    while (1) {
+        int item = get(); // Get item from buffer
+        consume(item); // Consume item
+        sleep(1); // Simulate consumption
+    }
+    return NULL;
+}
+
+int produce() {
+    return theProduct++;
+}
+
+int get() {
+    int item = buffer[out]; // Get item from buffer
+    out = (out + 1) % BUFFER_SIZE; // Update buffer
+    return item;
+}
+
+void consume(int item) {
+    printf("Consumed: %d\n", item);
+}
+
+int main() {
+    pthread_t producer_thread, consumer_thread;
+
+    // thread for producer
+    pthread_create(&producer_thread, NULL, producer, NULL);
+
+    // thread for consumer
+    pthread_create(&consumer_thread, NULL, consumer, NULL);
+
+    // Join threads
+    pthread_join(producer_thread, NULL);
+    pthread_join(consumer_thread, NULL);
+
+    return 0;
+}
